@@ -21,7 +21,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Transitions="*res://Transitions.gd"
+Transitions="*res://addons/transitions/Transitions.gd"
 
 [rendering]
 
