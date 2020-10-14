@@ -2,7 +2,7 @@ extends CanvasLayer
 
 signal fade_done
 
-export var fade_time_seconds:int = 1
+export var fade_time_seconds:float
 
 var _total_time:float = 0
 var _enabled = false

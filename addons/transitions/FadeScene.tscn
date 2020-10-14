@@ -1,19 +1,21 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Scenes/FadeScene.gd" type="Script" id=1]
-[ext_resource path="res://Shaders/Dissove2d.shader" type="Shader" id=2]
-[ext_resource path="res://assets/images/shaders/dissolve-adirectional.png" type="Texture" id=4]
+[ext_resource path="res://addons/transitions/Dissove2d.shader" type="Shader" id=1]
+[ext_resource path="res://addons/transitions/FadeScene.gd" type="Script" id=2]
+
+[sub_resource type="Gradient" id=2]
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+width = 256
 
 [sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 2 )
-shader_param/burn_color = Color( 1, 1, 1, 1 )
-shader_param/burn_size = null
+shader = ExtResource( 1 )
 shader_param/dissolve_amount = 0.0
-shader_param/emission_amount = null
-shader_param/dissolve_texture = ExtResource( 4 )
+shader_param/dissolve_texture = SubResource( 3 )
 
 [node name="CanvasLayer" type="CanvasLayer"]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 1 )

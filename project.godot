@@ -16,7 +16,12 @@ _global_script_class_icons={
 [application]
 
 config/name="Transitions"
+run/main_scene="res://Scenes/ManualTest1.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Transitions="*res://Transitions.gd"
 
 [rendering]
 

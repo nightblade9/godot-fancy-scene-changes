@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/ManualTest1.gd" type="Script" id=2]
+
+[node name="Manual1" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+color = Color( 0.466667, 0.0666667, 0.0666667, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 92.4986, 62.2263 )
+texture = ExtResource( 1 )

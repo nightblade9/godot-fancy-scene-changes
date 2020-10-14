@@ -6,7 +6,7 @@
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 1 )
-shader_param/dissolve_amount = 0.0
+shader_param/dissolve_amount = 0.448
 shader_param/dissolve_texture = ExtResource( 3 )
 
 [node name="Node2D" type="Node2D"]
