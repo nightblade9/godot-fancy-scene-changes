@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/transitions/Dissove2d.shader" type="Shader" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://addons/transitions/images/conical.png" type="Texture" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/dissolve_amount = 0.0
+shader_param/dissolve_texture = ExtResource( 3 )
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 1 )
+position = Vector2( 200.573, 213.978 )
+scale = Vector2( 5, 5 )
+texture = ExtResource( 2 )
+
+[node name="Note" type="Label" parent="."]
+margin_right = 545.0
+margin_bottom = 31.0
+text = "Click on the sprite > material > shader parame
+Click and drag the circular handle on Dissolve Amount from 0 to 1 to preview the transition effect"
+__meta__ = {
+"_edit_use_anchors_": false
+}
