@@ -19,7 +19,7 @@ func _process(delta):
 		queue_free()
 		
 	_total_time += delta
-	var fade_amount = abs(sin(_total_time))
+	var fade_amount = _total_time / fade_time_seconds
 	$Sprite.material.set_shader_param("dissolve_amount", fade_amount)
 
 func set_texture(texture:ImageTexture) -> void:
