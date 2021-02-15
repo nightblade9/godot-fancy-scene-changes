@@ -21,6 +21,3 @@ func _process(delta):
 	_total_time += delta
 	var fade_amount = _total_time / fade_time_seconds
 	$Sprite.material.set_shader_param("dissolve_amount", fade_amount)
-
-func set_texture(texture:ImageTexture) -> void:
-	$Sprite.material.set_shader_param("dissolve_texture", texture)
