@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-const FadeScene = preload("res://Transitions/FadeScene.tscn")
+const FadeScene = preload("res://addons/transitions/FadeScene.tscn")
 var _root:Viewport
 var _current_scene = null
 
@@ -38,7 +38,6 @@ func _common_pre_fade(fade_type, fade_time_seconds:float, shader_image:StreamTex
 	# specify a zero or non-zero value, it will introduce that extra frame. Sad.
 	
 	####### NOTE: might be solvable with yield(get_tree(), "idle_frame")
-
 	# Take a screenshot of the old scene. This is the only reliable way to make
 	# complex transitions. Cross-scene fades doesn't work well with multiple cameras;
 	# somehow, they just end up with extra frames randomly blitting mid-way.
@@ -51,6 +50,19 @@ func _common_pre_fade(fade_type, fade_time_seconds:float, shader_image:StreamTex
 
 	var sprite = fade_scene.get_node("Sprite")
 	sprite.texture = screenshot.texture
+	
+	# If the Godot project has test_width and test-height,  the screenshot will 
+	# be the window size, not the game size, so it won't perfectly match; actual
+	# game will look fine, though. To fix this, scale as needed.
+	# eg. if the game is 960x540 but test_width/test_height is 1600x900, the
+	# screenshot is 1600x900; so it looks zoomed in :facepalm:
+	var game_width:int = ProjectSettings.get_setting("display/window/size/width")
+	var game_height:int = ProjectSettings.get_setting("display/window/size/height")
+	var screenshot_width:float = screenshot.texture.get_width()
+	var screenshot_height:float = screenshot.texture.get_height()
+	
+	var sprite_scale = Vector2(game_width / screenshot_width, game_height / screenshot_height)
+	sprite.scale = sprite_scale
 	_root.add_child(fade_scene)
 	
 	# Remove visual abberations for other fades
