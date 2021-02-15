@@ -1,6 +1,7 @@
 extends CanvasLayer
 
-const FadeScene = preload("res://addons/transitions/FadeScene.tscn")
+const FadeScene = preload("res://Transitions/FadeScene.tscn")
+var _root:Viewport
 var _current_scene = null
 
 enum FadeType {
@@ -10,8 +11,8 @@ enum FadeType {
 }
 
 func _ready():
-	var root = get_tree().root
-	_current_scene = root.get_child(root.get_child_count() - 1)
+	_root = get_tree().root
+	_current_scene = _root.get_child(_root.get_child_count() - 1)
 
 func change_scene(new_scene:Node2D, fade_type, fade_time_seconds:float, shader_image:StreamTexture = null) -> void:
 	if new_scene == null:
@@ -37,7 +38,6 @@ func _common_pre_fade(fade_type, fade_time_seconds:float, shader_image:StreamTex
 	# specify a zero or non-zero value, it will introduce that extra frame. Sad.
 	
 	####### NOTE: might be solvable with yield(get_tree(), "idle_frame")
-	var root = get_tree().root
 
 	# Take a screenshot of the old scene. This is the only reliable way to make
 	# complex transitions. Cross-scene fades doesn't work well with multiple cameras;
@@ -51,7 +51,7 @@ func _common_pre_fade(fade_type, fade_time_seconds:float, shader_image:StreamTex
 
 	var sprite = fade_scene.get_node("Sprite")
 	sprite.texture = screenshot.texture
-	root.add_child(fade_scene)
+	_root.add_child(fade_scene)
 	
 	# Remove visual abberations for other fades
 	if fade_type != FadeType.Blend:
@@ -61,10 +61,9 @@ func _common_pre_fade(fade_type, fade_time_seconds:float, shader_image:StreamTex
 	if fade_type == FadeType.Blend:
 		sprite.material.set_shader_param("dissolve_texture", shader_image)
 	
-	return [root, fade_scene, sprite]
+	return [_root, fade_scene, sprite]
 
 func _common_wait_for_fade(data:Array, fade_type, fade_seconds:float) -> void:
-	var root = data[0]
 	var fade_scene = data[1]
 	var sprite = data[2]
 	
@@ -74,7 +73,7 @@ func _common_wait_for_fade(data:Array, fade_type, fade_seconds:float) -> void:
 	
 	if fade_type == FadeType.CrossFade:
 		var tween = Tween.new()
-		root.add_child(tween)
+		_root.add_child(tween)
 		tween.interpolate_property(sprite, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), fade_seconds)
 		tween.start()
 		yield(tween, "tween_completed")
@@ -88,10 +87,9 @@ func _common_wait_for_fade(data:Array, fade_type, fade_seconds:float) -> void:
 
 # new_scene is either Node2D or PackedScene. #herp #derp
 func _common_post_fade(data:Array, new_scene) -> void:
-	var root = data[0]
 	var fade_scene = data[1]
 	
-	root.remove_child(fade_scene)
+	_root.remove_child(fade_scene)
 	_current_scene = new_scene
 
 func _set_scene(new_scene):
@@ -99,12 +97,11 @@ func _set_scene(new_scene):
 	_current_scene.get_parent().remove_child(_current_scene)
 	_current_scene.queue_free()
 		
-	var root = get_tree().root
-	root.add_child(new_scene)
+	_root.add_child(new_scene)
 
 # Necessary for those buttery-smooth jitter-free fades
 func _take_screenshot():
-	var image:Image = get_tree().get_root().get_texture().get_data()
+	var image:Image = _root.get_texture().get_data()
 	# Flip it on the y-axis (because it's flipped)
 	image.flip_y()
 	
