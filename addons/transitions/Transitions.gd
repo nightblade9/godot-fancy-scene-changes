@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+signal pre_transition
+
 const FadeScene = preload("res://addons/transitions/FadeScene.tscn")
 var _root:Viewport
 var _current_scene = null
@@ -25,6 +27,7 @@ func change_scene(new_scene:Node2D, fade_type, fade_time_seconds:float, shader_i
 	
 	var data = _common_pre_fade(fade_type, fade_time_seconds, shader_image)
 	_set_scene(new_scene)
+	emit_signal("pre_transition")
 	
 	var coroutine = _common_wait_for_fade(data, fade_type, fade_time_seconds)
 	yield(coroutine, "completed")
