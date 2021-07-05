@@ -5,6 +5,7 @@ signal pre_transition
 const FadeScene = preload("res://addons/transitions/FadeScene.tscn")
 var _root:Viewport
 var _current_scene = null
+var scene_container:Node setget _set_scene_container
 
 enum FadeType {
 	Instant,
@@ -12,9 +13,18 @@ enum FadeType {
 	Blend
 }
 
+func _set_scene_container(new_container):
+	# Allow users to specify their own scene container node.
+	# This method also sets the current scene to be the last child of the new container.
+	scene_container = new_container
+	_current_scene = scene_container.get_child(scene_container.get_child_count() - 1)
+
 func _ready():
 	_root = get_tree().root
-	_current_scene = _root.get_child(_root.get_child_count() - 1)
+	# Set the default container to be the root viewport.
+	# This maintains backwards compatability with previous versions.
+	scene_container = _root
+	_current_scene = scene_container.get_child(scene_container.get_child_count() - 1)
 
 func change_scene(new_scene:Node2D, fade_type, fade_time_seconds:float, shader_image:StreamTexture = null) -> void:
 	if new_scene == null:
@@ -112,7 +122,7 @@ func _set_scene(new_scene):
 	_current_scene.get_parent().remove_child(_current_scene)
 	_current_scene.queue_free()
 		
-	_root.add_child(new_scene)
+	scene_container.add_child(new_scene)
 
 # Necessary for those buttery-smooth jitter-free fades
 func _take_screenshot():
