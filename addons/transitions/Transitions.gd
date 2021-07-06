@@ -13,7 +13,9 @@ enum FadeType {
 	Blend
 }
 
-func _set_scene_container(new_container):
+func _set_scene_container(new_container:Node):
+	if new_container == null:
+		push_error("")
 	# Allow users to specify their own scene container node.
 	# This method also sets the current scene to be the last child of the new container.
 	scene_container = new_container
