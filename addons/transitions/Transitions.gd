@@ -4,7 +4,7 @@ signal pre_transition
 
 const FadeScene = preload("res://addons/transitions/FadeScene.tscn")
 var _root:Viewport
-var _current_scene = null
+var scene_container:Node setget _set_scene_container
 
 enum FadeType {
 	Instant,
@@ -12,9 +12,20 @@ enum FadeType {
 	Blend
 }
 
+func _set_scene_container(new_container:Node):
+	# Allow users to specify their own scene container node.
+	if new_container == null:
+		push_error("Can't change scene container to null scene!")
+	scene_container = new_container
+
+func _get_current_scene():
+	return scene_container.get_child(scene_container.get_child_count() - 1)
+
 func _ready():
 	_root = get_tree().root
-	_current_scene = _root.get_child(_root.get_child_count() - 1)
+	# Set the default container to be the root viewport.
+	# This maintains backwards compatability with previous versions.
+	scene_container = _root
 
 func change_scene(new_scene:Node2D, fade_type, fade_time_seconds:float, shader_image:StreamTexture = null) -> void:
 	if new_scene == null:
@@ -103,16 +114,14 @@ func _common_wait_for_fade(data:Array, fade_type, fade_seconds:float) -> void:
 # new_scene is either Node2D or PackedScene. #herp #derp
 func _common_post_fade(data:Array, new_scene) -> void:
 	var fade_scene = data[1]
-	
 	_root.remove_child(fade_scene)
-	_current_scene = new_scene
 
 func _set_scene(new_scene):
 	# Dispose old scene so we don't get any camera jitters or wierdness.
-	_current_scene.get_parent().remove_child(_current_scene)
-	_current_scene.queue_free()
-		
-	_root.add_child(new_scene)
+	var previous_scene = _get_current_scene()
+	scene_container.remove_child(previous_scene)
+	previous_scene.queue_free()
+	scene_container.add_child(new_scene)
 
 # Necessary for those buttery-smooth jitter-free fades
 func _take_screenshot():
