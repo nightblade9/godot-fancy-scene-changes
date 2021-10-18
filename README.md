@@ -1,6 +1,6 @@
-# godot-transitions
+# Fancy Scene Changes for Godot
 
-Scene transitions library for Godot.
+Fancy shader effects to cross-fade between two scenes in Godot. Ships with a couple of samples, easily customizable with a simple black-and-white image.
 
 # Usage
 
