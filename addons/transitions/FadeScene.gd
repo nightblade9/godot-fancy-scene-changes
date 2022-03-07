@@ -10,7 +10,7 @@ var _enabled = false
 func start():
 	_enabled = true
 
-func _process(delta):
+func _process(delta:float):
 	if not _enabled:
 		return
 		

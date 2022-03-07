@@ -2,8 +2,7 @@ extends CanvasLayer
 
 signal pre_transition
 
-const FadeScene = preload("res://addons/transitions/FadeScene.tscn")
-const FadeSceneScript = preload("res://addons/transitions/FadeScene.gd")
+const FadeScene = preload("res://addons/transitions/FadeScene.gd")
 
 var _root:Viewport
 var scene_container:Node setget _set_scene_container
@@ -24,7 +23,7 @@ func _get_current_scene():
 	var num_nodes =  scene_container.get_child_count()
 	for i in range(num_nodes):
 		var candidate = scene_container.get_child(num_nodes - i - 1)
-		if not candidate is FadeSceneScript:
+		if not candidate is FadeScene:
 			return candidate
 	
 	push_error("Couldn't ascertain current scene")
@@ -68,7 +67,7 @@ func _common_pre_fade(fade_type, fade_time_seconds:float, shader_image:StreamTex
 	# Don't need the sprite mate, just the texture, for our "fade scene" that has
 	# a CanvasLayer root and a sprite with the material/shader/params preset (no
 	# easy way to set a shader in GDscript)
-	var fade_scene = _create_fade_scene()
+	var fade_scene = _create_fade_scene(shader_image)
 	fade_scene.fade_time_seconds = fade_time_seconds
 
 	var sprite = fade_scene.get_node("Sprite")
@@ -152,9 +151,6 @@ func _take_screenshot():
 	return sprite
 
 func _create_fade_scene(texture:StreamTexture) -> Node:
-	return FadeScene.instance()
-	
-	###########################################################################
 	var canvas = CanvasLayer.new()
 	canvas.set_script(load("res://addons/transitions/FadeScene.gd"))
 	
