@@ -3,13 +3,15 @@ extends CanvasLayer
 signal pre_transition
 
 const FadeScene = preload("res://addons/transitions/FadeScene.tscn")
+const FadeSceneScript = preload("res://addons/transitions/FadeScene.gd")
+
 var _root:Viewport
 var scene_container:Node setget _set_scene_container
 
 enum FadeType {
 	Instant, # immediately change
-	CrossFade, # cross-fade using a texture to determine how to fade
-	Blend # alpha blend one into the other
+	CrossFade, # naively fade in the new scene
+	Blend # alpha blend one into the other using a texture to control the fade
 }
 
 func _set_scene_container(new_container:Node):
@@ -19,8 +21,15 @@ func _set_scene_container(new_container:Node):
 	scene_container = new_container
 
 func _get_current_scene():
-	return scene_container.get_child(scene_container.get_child_count() - 1)
-
+	var num_nodes =  scene_container.get_child_count()
+	for i in range(num_nodes):
+		var candidate = scene_container.get_child(num_nodes - i - 1)
+		if not candidate is FadeSceneScript:
+			return candidate
+	
+	push_error("Couldn't ascertain current scene")
+	return null
+			
 func _ready():
 	_root = get_tree().root
 	# Set the default container to be the root viewport.
@@ -34,7 +43,7 @@ func change_scene(new_scene:Node2D, fade_type, fade_time_seconds:float, shader_i
 		push_error("Can't change to scene that's freed!")
 	
 	if fade_type == FadeType.Blend and shader_image == null:
-		push_error("You need to specify a shader image for shader cross-fades!")
+		push_error("You need to specify a shader image for blending!")
 	
 	var data = _common_pre_fade(fade_type, fade_time_seconds, shader_image)
 	_set_scene(new_scene)
@@ -59,7 +68,7 @@ func _common_pre_fade(fade_type, fade_time_seconds:float, shader_image:StreamTex
 	# Don't need the sprite mate, just the texture, for our "fade scene" that has
 	# a CanvasLayer root and a sprite with the material/shader/params preset (no
 	# easy way to set a shader in GDscript)
-	var fade_scene = FadeScene.instance()
+	var fade_scene = _create_fade_scene()
 	fade_scene.fade_time_seconds = fade_time_seconds
 
 	var sprite = fade_scene.get_node("Sprite")
@@ -107,9 +116,11 @@ func _common_wait_for_fade(data:Array, fade_type, fade_seconds:float) -> void:
 		# wait for shader fade to complete
 		fade_scene.start()
 		yield(fade_scene, "fade_done")
-	else: # FadeType.instant
+	elif fade_type == FadeType.Instant:
 		# calling function expects something yieldable
 		yield(get_tree().create_timer(0), "timeout")
+	else:
+		push_error("Missing implementation in _common_wait_for_fade for fade-type %s" % fade_type)
 
 # new_scene is either Node2D or PackedScene. #herp #derp
 func _common_post_fade(data:Array, new_scene) -> void:
@@ -140,3 +151,21 @@ func _take_screenshot():
 	
 	return sprite
 
+func _create_fade_scene(texture:StreamTexture) -> Node:
+	return FadeScene.instance()
+	
+	###########################################################################
+	var canvas = CanvasLayer.new()
+	canvas.set_script(load("res://addons/transitions/FadeScene.gd"))
+	
+	var sprite = Sprite.new()
+	sprite.centered = false
+	sprite.name = "Sprite"
+	canvas.add_child(sprite)
+	
+	var shader_material = ShaderMaterial.new()
+	shader_material.shader = load("res://addons/transitions/Dissolve2d.shader")
+	shader_material.set_shader_param("dissolve_texture", texture)
+	sprite.material = shader_material
+	
+	return canvas
