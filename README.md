@@ -30,6 +30,10 @@ Blend transition with a conical gradiant texture:
 
 ![](previews/blend-conical.gif)
 
+Blend using a brush texture:
+
+![](previews/brush-fade.gif)
+
 ## CrossFade
 
 Fades one screen directly into another.
@@ -41,3 +45,7 @@ Transitions.change_scene(ManualTest1.instance(), Transitions.FadeType.CrossFade,
 ```
 
 ![](previews/crossfade.gif)
+
+# Credits
+
+- [Horizontal Paint Brush Wipe](https://store.kde.org/p/1675120) image by Kdenlive Lumas, via KDE Store
