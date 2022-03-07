@@ -7,9 +7,9 @@ var _root:Viewport
 var scene_container:Node setget _set_scene_container
 
 enum FadeType {
-	Instant,
-	CrossFade,
-	Blend
+	Instant, # immediately change
+	CrossFade, # cross-fade using a texture to determine how to fade
+	Blend # alpha blend one into the other
 }
 
 func _set_scene_container(new_container:Node):
@@ -114,7 +114,8 @@ func _common_wait_for_fade(data:Array, fade_type, fade_seconds:float) -> void:
 # new_scene is either Node2D or PackedScene. #herp #derp
 func _common_post_fade(data:Array, new_scene) -> void:
 	var fade_scene = data[1]
-	_root.remove_child(fade_scene)
+	if fade_scene in _root:
+		_root.remove_child(fade_scene)
 
 func _set_scene(new_scene):
 	# Dispose old scene so we don't get any camera jitters or wierdness.
