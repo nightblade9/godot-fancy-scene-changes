@@ -35,7 +35,7 @@ func _ready():
 	# This maintains backwards compatability with previous versions.
 	scene_container = _root
 
-func change_scene(new_scene:Node2D, fade_type, fade_time_seconds:float, shader_image:StreamTexture = null) -> void:
+func change_scene(new_scene, fade_type, fade_time_seconds:float, shader_image:StreamTexture = null) -> void:
 	if new_scene == null:
 		push_error("Can't change scene to null scene!")
 	elif not is_instance_valid(new_scene):
