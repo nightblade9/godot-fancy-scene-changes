@@ -35,7 +35,7 @@ func _ready():
 	# This maintains backwards compatability with previous versions.
 	scene_container = _root
 
-func change_scene(new_scene, fade_type, fade_time_seconds:float, shader_image:StreamTexture = null) -> void:
+func change_scene(new_scene, fade_type, fade_time_seconds:float = 1.0, shader_image:StreamTexture = null) -> void:
 	if new_scene == null:
 		push_error("Can't change scene to null scene!")
 	elif not is_instance_valid(new_scene):
@@ -105,7 +105,11 @@ func _common_wait_for_fade(data:Array, fade_type, fade_seconds:float) -> void:
 	# as a root function of this script, but called from another method, we need
 	# to call yield(coroutine, "completed") on the results of this (yield) below.
 	
-	if fade_type == FadeType.CrossFade:
+	# Creating a 0s timer no longer works here, so we tween for 0s instead.
+	if fade_type == FadeType.Instant:
+		fade_seconds = 0.0
+	
+	if fade_type == FadeType.CrossFade or fade_type == FadeType.Instant:
 		var tween = Tween.new()
 		_root.add_child(tween)
 		tween.interpolate_property(sprite, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), fade_seconds)
@@ -115,9 +119,7 @@ func _common_wait_for_fade(data:Array, fade_type, fade_seconds:float) -> void:
 		# wait for shader fade to complete
 		fade_scene.start()
 		yield(fade_scene, "fade_done")
-	elif fade_type == FadeType.Instant:
-		# calling function expects something yieldable
-		yield(get_tree().create_timer(0), "timeout")
+		
 	else:
 		push_error("Missing implementation in _common_wait_for_fade for fade-type %s" % fade_type)
 
