@@ -14,11 +14,13 @@ const _IMAGES = {
 	"circle-out": preload("res://addons/transitions/images/circle-inverted.png"),
 	
 	# Noises
+	"noise": preload("res://addons/transitions/images/noise.png"),
 	"blurry-noise": preload("res://addons/transitions/images/blurry-noise.png"),
+	"noise-pixelated": preload("res://addons/transitions/images/noise-pixelated.png"),
 	"cell-noise": preload("res://addons/transitions/images/cell-noise.png"),
 	
 	# Misc/artistic
-	"horizontal-paint-brush": preload("res://addons/transitions/images/horiz_paint_brush.png"),
+	 "horizontal-paint-brush": preload("res://addons/transitions/images/horiz_paint_brush.png"),
 	"vertical-paint-brush": preload("res://addons/transitions/images/vertical_paint_brush.png")
 }
 
@@ -61,9 +63,15 @@ func circle_out(scene, fade_seconds:float = 1.0) -> void:
 	_fade("circle-out", scene, fade_seconds)
 	
 # Noise
+func noise(scene, fade_seconds:float = 1.0) -> void:
+	_fade("noise", scene, fade_seconds)
+	
+func pixelated_noise(scene, fade_seconds:float = 1.0) -> void:
+	_fade("noise-pixelated", scene, fade_seconds)
+	
 func blurry_noise(scene, fade_seconds:float = 1.0) -> void:
 	_fade("blurry-noise", scene, fade_seconds)
-
+	
 func cell_noise(scene, fade_seconds:float = 1.0) -> void:
 	_fade("cell-noise", scene, fade_seconds)
 
@@ -73,6 +81,13 @@ func horizontal_paint_brush(scene, fade_seconds:float = 1.0) -> void:
 
 func vertical_paint_brush(scene, fade_seconds:float = 1.0) -> void:
 	_fade("vertical-paint-brush", scene, fade_seconds)
+
+func stripes_left(scene, fade_seconds:float = 1.0) -> void:
+	_fade("stripes-left", scene, fade_seconds)
+
+func stripes_right(scene, fade_seconds:float = 1.0) -> void:
+	_fade("stripes-right", scene, fade_seconds)
+
 
 # Core method
 func _fade(type:String, scene, fade_seconds:float = 1.0) -> void:

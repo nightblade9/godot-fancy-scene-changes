@@ -20,6 +20,8 @@ I recently added several fades to the library (and plan to add several more). Si
 
 Blend uses a transition with a noisy texture.
 
+- `FancyFade.noise`: noise (1-pixel size)
+- `FancyFade.pixelated_noise`: pixelated noise (32-pixel size)
 - `FancyFade.blurry_noise`: blurry noise (see below)
 - `FancyFade.cell_noise`: cellular-shaped noise
 
