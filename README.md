@@ -1,6 +1,12 @@
 # Fancy Scene Changes for Godot
 
-Fancy shader effects to cross-fade between two scenes in Godot. Ships with a couple of samples, easily customizable with a simple black-and-white image.
+Fancy shader effects to cross-fade between two scenes in Godot. Ships with a couple of sample transition images, easily customizable with a simple black-and-white image.
+
+## Benefits
+
+- Easily fade or cross-fade from one scene to another
+- Customize the look and feel with a simple black-and-white image (several are included)
+- You can transition to an instance of a scene (e.g. after calling setup/initialize methods on it)
 
 # Usage
 
