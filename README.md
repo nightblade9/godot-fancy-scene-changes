@@ -38,8 +38,14 @@ Simple, linear gradients in a variety of shapes.
 - `FancyFade.wipe_square`: a square-shaped fade from center to the edges of the screen
 - `FancyFade.wipe_conical`: a clockwise fade starting from the top-left (see below)
 
+Conical:
+
 ![](previews/blend-conical.gif)
 
+
+Swirl:
+
+![](previews/swirl.gif)
 
 ## Circular Fades
 
@@ -52,6 +58,7 @@ Fade the screen in the shape of a circle/ellipse.
 
 - `FancyFade.horizontal_paint_brush`: Fades using four paint-like brush strokes, horizontally across the screen, from top to bottom (see below)
 - `FancyFade.vertical_paint_brush`: Fades using four paint-like brush strokes, vertically across the screen, from left to right
+- `FancyFade.swirl`: A swirly swishy fade (see below)
 
 ![](previews/brush-fade.gif)
 
