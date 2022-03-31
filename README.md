@@ -59,8 +59,15 @@ Fade the screen in the shape of a circle/ellipse.
 - `FancyFade.horizontal_paint_brush`: Fades using four paint-like brush strokes, horizontally across the screen, from top to bottom (see below)
 - `FancyFade.vertical_paint_brush`: Fades using four paint-like brush strokes, vertically across the screen, from left to right
 - `FancyFade.swirl`: A swirly swishy fade (see below)
+- `FancyFade.tile_reveal`: Reveals the scene using diagonal tiles, from top-left to bottom-right (see below)
+
+Horizontal paint brush:
 
 ![](previews/brush-fade.gif)
+
+Tile reveal:
+
+![](previews/tile-reveal.gif)
 
 ## CrossFade
 
@@ -85,10 +92,13 @@ const DISSOLVE_IMAGE = preload('res://addons/transitions/images/blurry-noise.png
 FancyFade.custom_fade(ManualTest2.instance(), 1.5, DISSOLVE_IMAGE)
 ```
 
-Blend uses a transition with a noisy texture:
+Custom fade uses a transition with a noisy texture:
 
 ![](previews/blend-noise.gif)
+
+You can check any of the pre-existing images in `addons/transitions/images` for samples.
 
 # Credits
 
 - [Horizontal Paint Brush Wipe](https://store.kde.org/p/1675120) image by Kdenlive Lumas, via KDE Store
+- [Tile Reval](https://raw.githubusercontent.com/mightymochi/Godot-3-Masking-Methods/main/Assets/tile_reveal.png) image by [Mighty Mochi](https://github.com/mightymochi)

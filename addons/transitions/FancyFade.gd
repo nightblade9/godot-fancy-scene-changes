@@ -22,7 +22,8 @@ const _IMAGES = {
 	# Misc/artistic
 	 "horizontal-paint-brush": preload("res://addons/transitions/images/horiz_paint_brush.png"),
 	"vertical-paint-brush": preload("res://addons/transitions/images/vertical_paint_brush.png"),
-	"swirl": preload("res://addons/transitions/images/swirl.png")
+	"swirl": preload("res://addons/transitions/images/swirl.png"),
+	"tile_reveal": preload("res://addons/transitions/images/tile_reveal.png")
 }
 
 func instant_change(scene) -> void:
@@ -91,6 +92,9 @@ func stripes_right(scene, fade_seconds:float = 1.0) -> void:
 
 func swirl(scene, fade_seconds:float = 1.0) -> void:
 	_fade("swirl", scene, fade_seconds)
+
+func tile_reveal(scene, fade_seconds:float = 1.0) -> void:
+	_fade("tile_reveal", scene, fade_seconds)
 	
 # Core method
 func _fade(type:String, scene, fade_seconds:float = 1.0) -> void:
