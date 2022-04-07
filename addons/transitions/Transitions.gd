@@ -21,10 +21,12 @@ func _set_scene_container(new_container:Node):
 	scene_container = new_container
 
 func _get_current_scene():
+	
 	var num_nodes =  scene_container.get_child_count()
+	
 	for i in range(num_nodes):
 		var candidate = scene_container.get_child(num_nodes - i - 1)
-		if not candidate is FadeScene:
+		if not candidate is FadeScene and not candidate is Tween and not candidate is Timer:
 			return candidate
 	
 	push_error("Couldn't ascertain current scene")
@@ -134,8 +136,11 @@ func _common_post_fade(data:Array, new_scene) -> void:
 func _set_scene(new_scene):
 	# Dispose old scene so we don't get any camera jitters or wierdness.
 	var previous_scene = _get_current_scene()
+	
 	scene_container.remove_child(previous_scene)
+	print("killed previous scene %s" % previous_scene)
 	previous_scene.queue_free()
+	
 	scene_container.add_child(new_scene)
 	_tree.current_scene = new_scene
 
