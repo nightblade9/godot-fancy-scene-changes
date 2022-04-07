@@ -9,7 +9,7 @@ Fancy shader effects to cross-fade between two scenes in Godot.
 
 # Usage
 
-- Add `addons/transitions/FancyFade.gd` as a autoload singleton script to your project
+- Add `addons/transitions/Transitions.gd` and `addons/transitions/FancyFade.gd` as autoload singleton scripts to your project (in that order)
 - Call the appropriate `FancyFade` method with parameters (e.g. `FancyFade.wipe_left(InventoryScene.instance())`)
 
 # Fades
