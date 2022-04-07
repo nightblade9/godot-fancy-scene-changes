@@ -4,6 +4,7 @@ signal pre_transition
 
 const FadeScene = preload("res://addons/transitions/FadeScene.gd")
 
+var _tree:SceneTree
 var _root:Viewport
 var scene_container:Node setget _set_scene_container
 
@@ -30,7 +31,8 @@ func _get_current_scene():
 	return null
 			
 func _ready():
-	_root = get_tree().root
+	_tree = get_tree()
+	_root = _tree.root
 	# Set the default container to be the root viewport.
 	# This maintains backwards compatability with previous versions.
 	scene_container = _root
@@ -135,6 +137,7 @@ func _set_scene(new_scene):
 	scene_container.remove_child(previous_scene)
 	previous_scene.queue_free()
 	scene_container.add_child(new_scene)
+	_tree.current_scene = new_scene
 
 # Necessary for those buttery-smooth jitter-free fades
 func _take_screenshot():
