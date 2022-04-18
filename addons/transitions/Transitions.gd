@@ -14,6 +14,13 @@ enum FadeType {
 	Blend # alpha blend one into the other using a texture to control the fade
 }
 
+func _ready():
+	_root = get_tree().root
+	# Set the default container to be the root viewport.
+	# This maintains backwards compatability with previous versions.
+	if(scene_container == null):
+		scene_container = _root
+
 func _set_scene_container(new_container:Node):
 	# Allow users to specify their own scene container node.
 	if new_container == null:
@@ -31,14 +38,6 @@ func _get_current_scene():
 	
 	push_error("Couldn't ascertain current scene")
 	return null
-
-
-func _ready():
-	_root = get_tree().root
-	# Set the default container to be the root viewport.
-	# This maintains backwards compatability with previous versions.
-	if(scene_container == null):
-		scene_container = _root
 
 func change_scene(new_scene, fade_type, fade_time_seconds:float = 1.0, shader_image:StreamTexture = null) -> void:
 	if new_scene == null:
