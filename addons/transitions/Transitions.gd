@@ -131,7 +131,7 @@ func _common_wait_for_fade(data:Array, fade_type, fade_seconds:float) -> void:
 	if fade_type == FadeType.CrossFade or fade_type == FadeType.Instant:
 		var tween = Tween.new()
 		_root.call_deferred("add_child", tween)
-        yield(tween, "ready")
+		yield(tween, "ready")
 		tween.interpolate_property(sprite, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), fade_seconds)
 		tween.start()
 		yield(tween, "tween_completed")
