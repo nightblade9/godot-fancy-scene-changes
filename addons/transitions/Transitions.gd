@@ -1,12 +1,13 @@
 extends CanvasLayer
 
 signal pre_transition
+signal post_transition
 
 const FadeScene = preload("res://addons/transitions/FadeScene.gd")
 
 var _root:Viewport
 var scene_container:Node setget _set_scene_container
-var current_scene:Node = null
+var _current_scene:Node = null
 
 enum FadeType {
 	Instant, # immediately change
@@ -56,7 +57,8 @@ func change_scene(new_scene, fade_type, fade_time_seconds:float = 1.0, shader_im
 	yield(coroutine, "completed")
 	
 	_common_post_fade(data, new_scene)
-	
+	emit_signal("post_transition")
+
 func _common_pre_fade(fade_type, fade_time_seconds:float, shader_image:StreamTexture = null) -> Array:
 	# NB: Remember spending 8 hours fruitlessly fixing that extra frame in dissolve
 	# fades? The one that's shrank to 1x zoom and (0, 0) on the map?
@@ -153,7 +155,7 @@ func _common_post_fade(data:Array, new_scene) -> void:
 
 func _set_scene(new_scene:Node):
 	# Dispose old scene so we don't get any camera jitters or wierdness.
-	var previous_scene = _get_current_scene() if (current_scene == null) else current_scene
+	var previous_scene = _get_current_scene() if (_current_scene == null) else _current_scene
 	
 	previous_scene.queue_free()
 	print("killed previous scene %s" % previous_scene)
@@ -163,7 +165,7 @@ func _set_scene(new_scene:Node):
 	if(scene_container == _root):
 		get_tree().current_scene = new_scene
 	
-	current_scene = new_scene
+	_current_scene = new_scene
 
 # Necessary for those buttery-smooth jitter-free fades
 func _take_screenshot():
