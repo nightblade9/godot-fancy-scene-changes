@@ -99,7 +99,7 @@ func _common_pre_fade(fade_type, fade_time_seconds:float, shader_image:StreamTex
 	if(new_aspect_ratio > default_aspect_ratio): # it is wider
 		fixed_game_width = game_width * new_aspect_ratio / default_aspect_ratio
 		fixed_game_height = game_height
-	elif((new_aspect_ratio < default_aspect_ratio)): # it is higher
+	elif(new_aspect_ratio < default_aspect_ratio): # it is higher
 		fixed_game_width = game_width
 		fixed_game_height = game_height * (screenshot_height/screenshot_width) / (game_height / game_width)
 	else: # aspect ratio didn't change
