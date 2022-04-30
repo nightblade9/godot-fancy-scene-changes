@@ -18,7 +18,7 @@ I recently added several fades to the library (and plan to add several more). Si
 
 ## Noise
 
-Blend uses a transition with a noisy texture.
+Blend uses a transition with a noisy texture.(The texture is not generated, so the fade is the same every time.)
 
 - `FancyFade.noise`: noise (1-pixel size)
 - `FancyFade.pixelated_noise`: pixelated noise (32-pixel size)
@@ -82,7 +82,7 @@ Transitions.change_scene(ManualTest1.instance(), Transitions.FadeType.CrossFade,
 
 ## Custom Fade
 
-Transitions between two scenes, using a black-and-white image as a mask. As time goes by, the pixels become transparent and show the underlying scene, starting from black first. For example images, see `addons/transitions/images`.
+Transitions between two scenes, using a black-and-white image as a mask. As time goes by, the pixels become transparent and show the underlying scene, starting from black first. All of the other methods use this with a specific texture. For example images, see `addons/transitions/images`.
 
 Code:
 
