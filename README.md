@@ -42,11 +42,6 @@ Conical:
 
 ![](previews/blend-conical.gif)
 
-
-Swirl:
-
-![](previews/swirl.gif)
-
 ## Circular Fades
 
 Fade the screen in the shape of a circle/ellipse.
@@ -64,6 +59,10 @@ Fade the screen in the shape of a circle/ellipse.
 Horizontal paint brush:
 
 ![](previews/brush-fade.gif)
+
+Swirl:
+
+![](previews/swirl.gif)
 
 Tile reveal:
 
