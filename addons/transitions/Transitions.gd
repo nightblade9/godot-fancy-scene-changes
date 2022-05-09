@@ -79,6 +79,7 @@ func _common_pre_fade(fade_type, fade_time_seconds:float, shader_image:StreamTex
 	var sprite = fade_scene.get_node("Sprite")
 	sprite.texture = screenshot.texture
 	
+	
 	# If the Godot project has test_width and test-height,  the screenshot will 
 	# be the window size, not the game size, so it won't perfectly match; actual
 	# game will look fine, though. To fix this, scale as needed.
@@ -118,6 +119,7 @@ func _common_pre_fade(fade_type, fade_time_seconds:float, shader_image:StreamTex
 	if fade_type == FadeType.Blend:
 		sprite.material.set_shader_param("dissolve_texture", shader_image)
 	
+	screenshot.queue_free() # prevents huge memory leaks on this orphan node
 	return [_root, fade_scene, sprite]
 
 func _common_wait_for_fade(data:Array, fade_type, fade_seconds:float) -> void:
