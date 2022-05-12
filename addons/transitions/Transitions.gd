@@ -159,7 +159,6 @@ func _set_scene(new_scene:Node):
 	# Dispose old scene so we don't get any camera jitters or wierdness.
 	var previous_scene = _get_current_scene() if (_current_scene == null) else _current_scene
 	previous_scene.queue_free()
-	print_debug("killed previous scene %s" % previous_scene)
 	
 	if new_scene.get_parent() != scene_container:
 		scene_container.call_deferred("add_child", new_scene)
