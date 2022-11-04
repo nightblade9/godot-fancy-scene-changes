@@ -99,5 +99,6 @@ You can check any of the pre-existing images in `addons/transitions/images` for 
 
 # Credits
 
+- Curtains, Scribbles, and Squares images by [jabsatz](https://github.com/glass-brick/Scene-Manager) (GLASS BRICK)
 - [Horizontal Paint Brush Wipe](https://store.kde.org/p/1675120) image by Kdenlive Lumas, via KDE Store
 - [Tile Reval](https://raw.githubusercontent.com/mightymochi/Godot-3-Masking-Methods/main/Assets/tile_reveal.png) image by [Mighty Mochi](https://github.com/mightymochi)
