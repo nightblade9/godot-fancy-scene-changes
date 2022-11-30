@@ -1,6 +1,6 @@
 # Fancy Fades for Godot
 
-Fancy shader effects to cross-fade between two scenes in Godot.
+Fancy shader effects to cross-fade between two scenes in Godot 3.x (does not yet work with Godot 4.x).
 
 - Fade with just one line of code
 - Ships with several sample transition images
