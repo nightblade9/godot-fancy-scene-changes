@@ -2,7 +2,7 @@ extends CanvasLayer
 
 signal fade_done
 
-export var fade_time_seconds:float
+@export var fade_time_seconds:float
 
 var _total_time:float = 0
 var _enabled = false
@@ -20,4 +20,4 @@ func _process(delta:float):
 		
 	_total_time += delta
 	var fade_amount = _total_time / fade_time_seconds
-	$Sprite.material.set_shader_param("dissolve_amount", fade_amount)
+	$Sprite2D.material.set_shader_parameter("dissolve_amount", fade_amount)

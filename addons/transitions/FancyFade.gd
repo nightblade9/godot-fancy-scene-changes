@@ -27,16 +27,16 @@ const _IMAGES = {
 }
 
 func instant_change(scene) -> void:
-	Transitions.change_scene(scene, Transitions.FadeType.Instant, 0)
+	Transitions.change_scene_to_file(scene, Transitions.FadeType.Instant, 0)
 
 func cross_fade(scene, fade_seconds:float = 1.0) -> void:
-	Transitions.change_scene(scene, Transitions.FadeType.CrossFade, fade_seconds)
+	Transitions.change_scene_to_file(scene, Transitions.FadeType.CrossFade, fade_seconds)
 
-func custom_fade(scene, fade_seconds:float = 1.0, shader_image:StreamTexture = null) -> void:
+func custom_fade(scene, fade_seconds:float = 1.0, shader_image:CompressedTexture2D = null) -> void:
 	if shader_image == null:
 		push_error("You must specify an image for custom fade! (Typically, use load(...))")
 
-	Transitions.change_scene(scene, Transitions.FadeType.Blend, fade_seconds, shader_image)
+	Transitions.change_scene_to_file(scene, Transitions.FadeType.Blend, fade_seconds, shader_image)
 
 # Wipe/gradient
 func wipe_left(scene, fade_seconds:float = 1.0) -> void:
@@ -98,4 +98,4 @@ func tile_reveal(scene, fade_seconds:float = 1.0) -> void:
 	
 # Core method
 func _fade(type:String, scene, fade_seconds:float = 1.0) -> void:
-	Transitions.change_scene(scene, Transitions.FadeType.Blend, fade_seconds, _IMAGES[type])
+	Transitions.change_scene_to_file(scene, Transitions.FadeType.Blend, fade_seconds, _IMAGES[type])
