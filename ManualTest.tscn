@@ -39,7 +39,7 @@ text = "Cross-Fade Scenes"
 
 [node name="BlendButton" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-text = "Blend (Fancy)"
+text = "Blend (fancy!)"
 
 [connection signal="pressed" from="HBoxContainer/InstantButton" to="." method="_on_instant_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/CrossFadeButton" to="." method="_on_cross_fade_button_pressed"]

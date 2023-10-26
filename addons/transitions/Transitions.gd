@@ -40,7 +40,7 @@ func _get_current_scene():
 	push_error("Couldn't ascertain current scene")
 	return null
 
-func change_scene_to_file(new_scene, fade_type, fade_time_seconds:float = 1.0, shader_image:CompressedTexture2D = null) -> void:
+func change_scene_to_instance(new_scene, fade_type, fade_time_seconds:float = 1.0, shader_image:CompressedTexture2D = null) -> void:
 	if new_scene == null:
 		push_error("Can't change scene to null scene!")
 	elif not is_instance_valid(new_scene):
