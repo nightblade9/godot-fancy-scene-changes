@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://6apps8ssdlui"]
+[gd_scene load_steps=4 format=3 uid="uid://6apps8ssdlui"]
+
+[ext_resource type="Script" path="res://ManualTest.gd" id="1_fa6lq"]
 
 [sub_resource type="Gradient" id="Gradient_oc8g0"]
 colors = PackedColorArray(0, 0, 0.211765, 1, 0, 0.419608, 0.776471, 1)
@@ -6,9 +8,39 @@ colors = PackedColorArray(0, 0, 0.211765, 1, 0, 0.419608, 0.776471, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_hv8xb"]
 gradient = SubResource("Gradient_oc8g0")
 
-[node name="Node2D" type="Node2D"]
+[node name="ManualTest" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fa6lq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(578.5, 328)
 scale = Vector2(18.3281, 10.4375)
 texture = SubResource("GradientTexture2D_hv8xb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(1142, 50)
+offset_right = 1142.0
+offset_bottom = 50.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="InstantButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Instant Change"
+
+[node name="CrossFadeButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Cross-Fade Scenes"
+
+[node name="BlendButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Blend (Fancy)"
+
+[connection signal="pressed" from="HBoxContainer/InstantButton" to="." method="_on_instant_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/CrossFadeButton" to="." method="_on_cross_fade_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/BlendButton" to="." method="_on_blend_button_pressed"]

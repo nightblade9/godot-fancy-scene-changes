@@ -4,6 +4,9 @@ signal fade_done
 
 @export var fade_time_seconds:float
 
+# $Sprite is added dynamically from within the Transitions.gd code; this way,
+# we don't need to explicitly have a .tscn file for this scene.
+
 var _total_time:float = 0
 var _enabled = false
 

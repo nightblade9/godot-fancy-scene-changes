@@ -5,7 +5,7 @@ signal post_transition
 
 const FadeScene = preload("res://addons/transitions/FadeScene.gd")
 
-var _root:SubViewport
+var _root:Window
 var scene_container:Node: set = _set_scene_container
 var _current_scene:Node = null
 
@@ -53,8 +53,7 @@ func change_scene_to_file(new_scene, fade_type, fade_time_seconds:float = 1.0, s
 	_set_scene(new_scene)
 	emit_signal("pre_transition")
 	
-	var coroutine = _common_wait_for_fade(data, fade_type, fade_time_seconds)
-	await coroutine.completed
+	await _common_wait_for_fade(data, fade_type, fade_time_seconds)
 	
 	_common_post_fade(data, new_scene)
 	emit_signal("post_transition")
@@ -135,12 +134,9 @@ func _common_wait_for_fade(data:Array, fade_type, fade_seconds:float) -> void:
 		fade_seconds = 0.0
 	
 	if fade_type == FadeType.CrossFade or fade_type == FadeType.Instant:
-		var tween = Tween.new()
-		_root.call_deferred("add_child", tween)
-		await tween.ready
-		tween.interpolate_property(sprite, "modulate", Color(1, 1, 1, 1), Color(1, 1, 1, 0), fade_seconds)
-		tween.start()
-		await tween.tween_completed
+		var tween:Tween = create_tween()
+		tween.tween_property(sprite, "modulate", Color(1, 1, 1, 0), fade_seconds)
+		await tween.finished
 	elif fade_type == FadeType.Blend:
 		# wait for shader fade to complete
 		fade_scene.start()
@@ -152,7 +148,7 @@ func _common_wait_for_fade(data:Array, fade_type, fade_seconds:float) -> void:
 # new_scene is either Node2D or PackedScene. #herp #derp
 func _common_post_fade(data:Array, new_scene) -> void:
 	var fade_scene = data[1]
-	if fade_scene in _root:
+	if fade_scene in _root.get_children():
 		_root.remove_child(fade_scene)
 
 func _set_scene(new_scene:Node):
@@ -169,13 +165,9 @@ func _set_scene(new_scene:Node):
 
 # Necessary for those buttery-smooth jitter-free fades
 func _take_screenshot():
-	var image:Image = _root.get_texture().get_data()
-	# Flip it on the y-axis (because it's flipped)
-	image.flip_y()
+	var image:Image = _root.get_texture().get_image()
 	
-	var image_texture = ImageTexture.new()
-	image_texture.create_from_image(image)
-	image_texture.flags = 0 # turn off "Filter" so it's pixel perfect
+	var image_texture = ImageTexture.create_from_image(image)
 
 	var sprite = Sprite2D.new()
 	sprite.texture = image_texture
@@ -193,7 +185,7 @@ func _create_fade_scene(texture:CompressedTexture2D) -> Node:
 	canvas.add_child(sprite)
 	
 	var shader_material = ShaderMaterial.new()
-	shader_material.gdshader = load("res://addons/transitions/Dissolve2d.gdshader")
+	shader_material.shader = load("res://addons/transitions/Dissolve2d.gdshader")
 	shader_material.set_shader_parameter("dissolve_texture", texture)
 	sprite.material = shader_material
 	
