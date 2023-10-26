@@ -158,8 +158,9 @@ func _set_scene(new_scene:Node):
 	
 	if new_scene.get_parent() != scene_container:
 		scene_container.call_deferred("add_child", new_scene)
-	if(scene_container == _root):
-		get_tree().current_scene = new_scene
+		
+	if scene_container == _root:
+		get_tree().call_deferred("set_current_scene", new_scene)
 	
 	_current_scene = new_scene
 
