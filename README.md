@@ -11,8 +11,7 @@ If you're using Godot 3.x, check out the `godot-3.x` branch. Note that this bran
 
 # Usage
 
-- Add `addons/transitions/Transitions.gd` and `addons/transitions/FancyFade.gd` as autoload singleton scripts to your project (in that order)
-- Call the appropriate `FancyFade` method with parameters (e.g. `FancyFade.wipe_left(InventoryScene.instance())`)
+Call the appropriate `FancyFade` method with parameters (e.g. `FancyFade.wipe_left(InventoryScene.instance())`)
 
 # Fades
 
